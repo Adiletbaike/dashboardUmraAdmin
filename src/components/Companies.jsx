@@ -21,10 +21,11 @@ const Companies = () => {
     data: {
       id: "",
       name: "",
-      login: "",
+      username: "",
       password: "",
     },
   });
+  console.log(companyData);
   const navigate = useNavigate();
   const customAxios = CustomAxios();
   const [isLoad, setIsLoad] = useState(true);
@@ -35,7 +36,7 @@ const Companies = () => {
         getAllCompanies();
       }
     } else {
-      navigate("/login");
+      navigate("/username");
     }
   }, []);
 
@@ -50,7 +51,7 @@ const Companies = () => {
             return {
               id: item.id,
               name: item.companyName,
-              login: item.login,
+              username: item.username,
               password: item.password,
             };
           });
@@ -72,7 +73,7 @@ const Companies = () => {
       url: "company",
       data: JSON.stringify({
         name: companyData.data.name,
-        login: companyData.data.login,
+        username: companyData.data.username,
         password: companyData.data.password,
       }),
     })
@@ -82,7 +83,7 @@ const Companies = () => {
             return {
               id: item.id,
               name: item.companyName,
-              login: item.login,
+              username: item.username,
               password: item.password,
             };
           });
@@ -92,7 +93,7 @@ const Companies = () => {
           data: {
             id: "",
             name: "",
-            login: "",
+            username: "",
             password: "",
           },
         });
@@ -157,6 +158,8 @@ const Companies = () => {
       url: `company/${companyData.data.id}`,
       data: JSON.stringify({
         name: companyData.data.name,
+        username: companyData.data.username,
+        password: companyData.data.password,
       }),
     })
       .then((res) => {
@@ -166,7 +169,7 @@ const Companies = () => {
               return {
                 id: item.id,
                 name: res.data.companyName,
-                login: res.data.companyLogin,
+                username: res.data.companyLogin,
                 password: res.data.companyPassword,
               };
             } else {
@@ -179,8 +182,8 @@ const Companies = () => {
           data: {
             id: "",
             name: "",
-            login: "",
-            password: ""
+            username: "",
+            password: "",
           },
         });
         setShowModal(false);
@@ -212,7 +215,7 @@ const Companies = () => {
           onClick={() => {
             localStorage.setItem("isAuth", false);
             localStorage.setItem("token", "");
-            navigate("/login");
+            navigate("/username");
           }}
         >
           <CiLogout color="yellow" />
@@ -232,8 +235,8 @@ const Companies = () => {
                   data: {
                     id: "",
                     name: "",
-                    login: "",
-                    password: ""
+                    username: "",
+                    password: "",
                   },
                 };
               });
@@ -283,38 +286,50 @@ const Companies = () => {
                   />
                 </div>
                 <div>
-                                <label
-                                    htmlFor="groups"
-                                    className="block mb-2 text-sm font-medium text-gray-900"
-                                >
-                                    Логин
-                                </label>
-                                <input
-                                    type="text"
-                                    name="login"
-                                    placeholder="Логин"
-                                    value={companyData.login}
-                                    required
-                                    className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 outline-none"
-                                    onChange={(e) =>setCompanyData(prev=>{return {...prev, username: e.target.value}})}
-                                />
-                            </div>
-                            <div>
-                                <label
-                                    className="block mb-2 text-sm font-medium text-gray-900"
-                                >
-                                    Пароль
-                                </label>
-                                <input
-                                    type="password"
-                                    name="password"
-                                    placeholder="Пароль"
-                                    value={companyData.password}
-                                    required
-                                    className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 outline-none"
-                                    onChange={(e) =>setCompanyData(prev=>{return {...prev, password: e.target.value}})}
-                                />
-                            </div>
+                  <label
+                    htmlFor="groups"
+                    className="block mb-2 text-sm font-medium text-gray-900"
+                  >
+                    Логин
+                  </label>
+                  <input
+                    type="text"
+                    name="username"
+                    placeholder="Логин"
+                    value={companyData.data.username}
+                    required
+                    className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 outline-none"
+                    onChange={(e) =>
+                      setCompanyData((prev) => {
+                        return {
+                          ...prev,
+                          data: { ...prev.data, username: e.target.value },
+                        };
+                      })
+                    }
+                  />
+                </div>
+                <div>
+                  <label className="block mb-2 text-sm font-medium text-gray-900">
+                    Пароль
+                  </label>
+                  <input
+                    type="password"
+                    name="password"
+                    placeholder="Пароль"
+                    value={companyData.data.password}
+                    required
+                    className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 outline-none"
+                    onChange={(e) =>
+                      setCompanyData((prev) => {
+                        return {
+                          ...prev,
+                          data: { ...prev.data, password: e.target.value },
+                        };
+                      })
+                    }
+                  />
+                </div>
                 <div className="flex justify-end pt-5">
                   <button
                     type="submit"
@@ -405,7 +420,7 @@ const Companies = () => {
                           </td>
                           <td className="px-6 py-4 w-full">
                             <div className="text-sm font-medium text-gray-900">
-                              {company.login}
+                              {company.username}
                             </div>
                           </td>
                           <td className="px-6 py-4 w-full">
