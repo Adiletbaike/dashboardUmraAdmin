@@ -3,8 +3,7 @@ import './index.css'
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Login from './components/Auth/Login';
 import { createContext } from 'react';
-import Componies from './components/Companies';
-import CompanyAdmins from './components/ComponyAdmins';
+import Companies from './components/Companies';
 
 export const AppContext = createContext(null);
 
@@ -14,8 +13,7 @@ const App = () => {
     <BrowserRouter>
       <Routes>
 
-        <Route path='/' element={<Componies/>}/> 
-        <Route path='/:companyName/:companyId/admins' element={<CompanyAdmins/>}/> 
+        <Route path='/' element={<Companies/>}/> 
           
         <Route path='/login' element={<Login/>}/>
         <Route path="*" element={"$404"}/>
