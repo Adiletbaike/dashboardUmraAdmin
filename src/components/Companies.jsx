@@ -36,7 +36,7 @@ const Companies = () => {
         getAllCompanies();
       }
     } else {
-      navigate("/username");
+      navigate("/login");
     }
   }, []);
 
