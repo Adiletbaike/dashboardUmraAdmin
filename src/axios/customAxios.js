@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const baseUrl = "http://3.70.156.253:8080/api/v1/";
+export const baseUrl = "http://3.70.156.253:8080/api/v1/";
 
 export default function CustomAxios(){
 

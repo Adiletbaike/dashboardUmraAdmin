@@ -1,45 +1,37 @@
-import React, {useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import CustomAxios from "../../axios/customAxios";
+import CustomAxios, { baseUrl } from "../../axios/customAxios";
 import Loader from "../Constants/Louder";
+import axios from "axios";
+import { toast } from "react-toastify";
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-
   const navigate = useNavigate();
-  const customAxios = CustomAxios();
+
   const [isLaod, setIsLoad] = useState(false);
 
   const handleLogin = async () => {
     setIsLoad(true);
-    try {
-      const response = await customAxios({
-        method: 'post',
-        url:'auth/login/super-admin',
-        maxBodyLength: Infinity,
-        data: JSON.stringify({
-          email: email,
-          password: password
-        }),
+    axios
+      .post(`${baseUrl}auth/login/super-admin`, { email, password })
+      .then((res) => {
+        localStorage.setItem("isAuth", "true"); // Ensure consistent typing for boolean in localStorage
+        localStorage.setItem("token", res.data.token);
+        navigate("/");
+      })
+      .catch((error) => {
+        alert(error.message);
+        setIsLoad(false);
       });
-      
-      localStorage.setItem('isAuth', true);
-      localStorage.setItem('token', response.data.token);
-      navigate('/');
-      
-    } catch (error) {
-      alert(error.message);
-    }finally{
-      setIsLoad(false)
-    }
   };
 
   useEffect(() => {
-    if (localStorage.getItem('isAuth')=='true') {
+    if (localStorage.getItem("isAuth") == "true") {
       navigate("/");
     }
-  }, []);  
+  }, []);
 
   return (
     <div className="relative">
@@ -51,7 +43,6 @@ const Login = () => {
           <div className="flex flex-col justify-center items-center mt-10 md:mt-4 space-y-6 md:space-y-8 relative">
             <div className="">
               <input
-
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 type="text"
@@ -68,13 +59,13 @@ const Login = () => {
                 className=" bg-gray-100 rounded-lg px-5 py-2 focus:border border-violet-600 focus:outline-none text-black placeholder:text-gray-600 placeholder:opacity-50 font-semibold md:w-72 lg:w-[340px]"
               />
             </div>
-            {
-              isLaod?
-              <div className= "z-1 absolute">
-                <Loader/>
-              </div>:
-              ''
-            }
+            {isLaod ? (
+              <div className="z-1 absolute">
+                <Loader />
+              </div>
+            ) : (
+              ""
+            )}
           </div>
           <div className="text-center mt-7">
             <button
@@ -88,7 +79,6 @@ const Login = () => {
         </div>
       </div>
     </div>
-
   );
 };
 
