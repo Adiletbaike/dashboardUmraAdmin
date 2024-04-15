@@ -98,7 +98,7 @@ const Companies = () => {
           },
         });
         setShowModal(false);
-        toast.success("Ийгиликтүү сакталды!!!", {
+        toast.success("Успешно добавлено!!!", {
           position: "top-right",
           autoClose: 3000, // 3 seconds
           hideProgressBar: true,
@@ -126,7 +126,7 @@ const Companies = () => {
           url: `company/${delCompanyId}`,
         });
         getAllCompanies();
-        toast.error("Ийгиликтүү өчүрүлдү!!!", {
+        toast.error("Успешно удалено!!!", {
           position: "top-right",
           autoClose: 3000, // 3 seconds
           hideProgressBar: true,
@@ -187,7 +187,7 @@ const Companies = () => {
           },
         });
         setShowModal(false);
-        toast.success("Ийгиликтүү сакталды!!!", {
+        toast.info("Успешно обновлено!!!", {
           position: "top-right",
           autoClose: 3000, // 3 seconds
           hideProgressBar: true,
@@ -215,17 +215,17 @@ const Companies = () => {
           onClick={() => {
             localStorage.setItem("isAuth", false);
             localStorage.setItem("token", "");
-            navigate("/username");
+            navigate("/login");
           }}
         >
           <CiLogout color="yellow" />
-          <span className="text-white text-sm font-normal">Чыгуу</span>
+          <span className="text-white text-sm font-normal">Выход</span>
         </button>
       </div>
       <div className="bg-white p-4">
         <ToastContainer />
         <div className="flex justify-between items-center border-b pb-4 border-gray-200">
-          <h3 className="text-xl font-bold">Компаниялар</h3>
+          <h3 className="text-xl font-bold">Компании</h3>
           <button
             className="flex justify-end items-center text-lg rounded-lg border p-1 bg-green-400"
             onClick={() => {
@@ -244,7 +244,7 @@ const Companies = () => {
             }}
           >
             <IoMdAdd />
-            Жаңы кошуу
+            Добавить
           </button>
           <Modal isVisible={showModal} onClose={() => setShowModal(false)}>
             <div className="py-6 px-6 lg:px-8 text-left">
@@ -265,13 +265,13 @@ const Companies = () => {
                     htmlFor="groups"
                     className="block mb-2 text-sm font-medium text-gray-900"
                   >
-                    Аты
+                    Название компании
                   </label>
                   <input
                     type="text"
                     name="name"
                     id="name"
-                    placeholder="Аты"
+                    placeholder="Название"
                     value={companyData.data.name}
                     required
                     className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 outline-none"
@@ -335,7 +335,7 @@ const Companies = () => {
                     type="submit"
                     className="w-100 text-white bg-green-600 hover:bg-green-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center"
                   >
-                    Сактоо
+                    {companyData.isEdit ? 'Обновить' : 'Сохранить'}
                   </button>
                 </div>
               </form>
@@ -366,7 +366,7 @@ const Companies = () => {
                       }}
                     >
                       <IoMdAdd />
-                      Жаңы кошуу
+                      Добавить
                     </button>
                   </div>
                 ) : (
@@ -377,10 +377,10 @@ const Companies = () => {
                           №
                         </th>
                         <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider whitespace-nowrap">
-                          Company id
+                          Компании ID
                         </th>
                         <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider whitespace-nowrap">
-                          Компания аты
+                          Название компании
                         </th>
                         <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider whitespace-nowrap">
                           Логин
@@ -389,12 +389,9 @@ const Companies = () => {
                           Пароль
                         </th>
                         <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider whitespace-nowrap">
-                          Control
+                          Действие
                         </th>
 
-                        <th className="relative px-6 py-3">
-                          <span className="sr-only">Edit</span>
-                        </th>
                       </tr>
                     </thead>
                     <tbody className="bg-white divide-y divide-gray-200">
@@ -455,7 +452,7 @@ const Companies = () => {
                             {isShowDialogModalWin && (
                               <DialogDelete
                                 onDialog={areYouSureDelete}
-                                message={"Чындап өчүрүүнү каалайсызбы?"}
+                                message={"Вы уверены?"}
                               />
                             )}
                           </td>
